@@ -1,0 +1,8 @@
+# tmp files
+*~
+
+# tmp code object files
+*.o
+
+# binary files
+myshell
