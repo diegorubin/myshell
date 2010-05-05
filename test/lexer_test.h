@@ -10,6 +10,11 @@
  
 #include <assert.h>
 #include <stdbool.h>
+#include "help.h"
+
 #include "../src/lexer.h"
+
+void test_match();
+void test_get_token();
 
 #endif /* LEXER_TEST_H */

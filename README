@@ -1,1 +1,5 @@
 Implementação de shell em C utilizando tecnicas de TDD.
+
+Gramática Utilizada:
+
+<command_line> : <command>

@@ -19,6 +19,7 @@ myshell: $(C_SOURCES:.c=.o)
 test: $(TEST_SOURCES:.c=.o)
 	@echo Construindo testes
 	gcc $(C_FLAGS) -o myshell_test $^ $(C_OBS:$(SRC_DIR)/main.o=)
+	./myshell_test
 
 clean:
 	@echo Limpando arquivos

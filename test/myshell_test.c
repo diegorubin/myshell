@@ -6,8 +6,17 @@
  * Arquivo principal dos testes unitarios.
  */
  
+ #include <stdio.h>
+ 
  #include "lexer_test.h"
  
  int main(){
+ 	printf("----------------------");
+ 	printf("|  Executanto Testes Unitarios  |");
+ 	printf("----------------------");
+ 	printf("\n");
+ 	
+ 	test_get_token();
+ 	
  	return 0;
  }
