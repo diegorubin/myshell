@@ -16,5 +16,8 @@ void test_match(){
 }
 
 void test_get_token(){
-	print_test_name("Get Space Token");	
+	print_test_name("Get Space Token");
+	fprintf(stdin," ");
+	assert(get_token() == T_SPACE && "test_get_token()");
+	print_ok();
 }

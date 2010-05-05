@@ -9,5 +9,9 @@
 
 void print_test_name(char *test_name){
 	number_of_tests++;
-	printf("Test %d: %s\n",number_of_tests,test_name);
+	printf("Test %d: %s:",number_of_tests,test_name);
+}
+
+void print_ok(){
+	printf(" Ok\n");
 }
