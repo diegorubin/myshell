@@ -7,7 +7,8 @@
  
 #ifndef LEXER_H
 #define LEXER_H 
- 
+
+char lexeme[1024];
 typedef int token_t;
 
 enum {
@@ -18,7 +19,7 @@ enum {
         T_CMDSEP = ';',
         T_BACKGROUND = '&',
         T_EOL = '\n',
-        T_ARGUMENT = 256,
+        T_ARGUMENT = 1024,
 };
 
 

@@ -11,16 +11,41 @@
 
 #include "lexer.h"
 
+static bool is_special(int c)
+{
+	return c == T_SPACE
+	    || c == T_PIPE
+	    || c == T_INPUT
+	    || c == T_OUTPUT
+	    || c == T_CMDSEP
+	    || c == T_BACKGROUND
+	    || c == T_EOL
+		|| c == EOF;
+}
+
 token_t get_token(){
-	char c;
+	int c;
 	
 	while(true){
-		c = ';';
+		c = fgetc(stdin);
 		switch(c){
 			case T_SPACE:
 				continue;
-			case T_CMDSEP:
-				return c;
+			case ';':
+				return T_CMDSEP; 
+			case EOF:
+				return EOF;
+			case '\n':
+				return T_EOL;
+			default:{
+				int i = 0;
+       	 		do{
+       				lexeme[i++] = c; 
+	 			} while (!is_special(c = fgetc(stdin)));
+       	 		lexeme[i] = 0;
+       	 		ungetc(c,stdin);
+       	 		return T_ARGUMENT;
+       	 	}
 		}
 	} 
 }
@@ -29,7 +54,7 @@ int match(token_t expected)
 {
 
    if (lookahead != expected) {
-     fprintf (stderr, "Erro de sintaxe!");
+     fprintf (stderr, "Erro de sintaxe! %d:%c", lookahead, expected);
      return false;
    }
    lookahead = get_token();

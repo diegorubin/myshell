@@ -14,4 +14,15 @@ void print_test_name(char *test_name){
 
 void print_ok(){
 	printf(" Ok\n");
+	if(buffer){
+		close(buffer);
+		buffer = 0;
+	}	
 }
+
+void change_standard_input(const char input[]){
+	buffer = fmemopen (input, strlen(input), "r");
+	close(0);
+	dup2(buffer,0);
+}
+

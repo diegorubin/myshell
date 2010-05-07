@@ -9,11 +9,13 @@
 #include <unistd.h>
 
 #include "lexer.h"
+#include "parser.h"
 
 int main(int argc, char *argv[]) {
 	do {
 		printf("[]$ ");
 		lookahead = get_token();
+		command_line();
 	} while (lookahead != EOF);
 	return 0;
 }

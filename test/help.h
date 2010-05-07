@@ -8,9 +8,18 @@
 #ifndef HELP
 #define HELP
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <string.h>
+
 static int number_of_tests = 0;
+static int buffer = 0;
 
 void print_test_name(char *test_name);
 void print_ok();
+void change_standard_input(const char input[]);
 
 #endif /* HELP */
