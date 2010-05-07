@@ -4,7 +4,6 @@
  * Copyright (C) Diego Rubin 2010 <rubin.diego@gmail.com>
  * 
  */
-
 #include "parser.h"
 #include "lexer.h"
 
@@ -15,7 +14,6 @@ void command_line()
     first_command = new_command();
     if (lookahead == T_EOL) {
       if (strcmp(first_command->args[0],"cd") == 0){
-      	fprintf (stderr, "command cd)! lookahead %d:", lookahead);
         builtin_cd(first_command);
       } else if (strcmp(first_command->args[0],"pwd") == 0){
         builtin_pwd(first_command);
@@ -24,9 +22,9 @@ void command_line()
       } else { 
         run_command(first_command);
       }
+      match(T_EOL);
     }
-    fprintf (stderr, "antes do match(T_EOL)! lookahead %d:", lookahead);
-    match(T_EOL);
+    
 
 }
 
@@ -37,6 +35,9 @@ type_command *new_command(){
 
          do {
 			/* arguments */
+			new->args[new->argc] = strdup(lexeme);
+			new->argc++;
+			match(T_ARGUMENT);
 
          } while(lookahead == T_ARGUMENT);
 
@@ -109,7 +110,7 @@ int builtin_exit (type_command *cmd){
 	fprintf(stderr, "exit: argumentos demais\n"); 
 	return 1; 
   } else { 
-	exit(1); 
+	exit(0); 
   } 
 
 }

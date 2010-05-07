@@ -42,7 +42,7 @@ token_t get_token(){
        	 		do{
        				lexeme[i++] = c; 
 	 			} while (!is_special(c = fgetc(stdin)));
-       	 		lexeme[i] = 0;
+       	 		lexeme[i] = '\0';
        	 		ungetc(c,stdin);
        	 		return T_ARGUMENT;
        	 	}

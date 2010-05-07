@@ -30,6 +30,7 @@ struct command_struct *first_command;
 void command_line();
 type_command *new_command();
 int run_command(type_command *cmd);
+void fill_args();
 
 /* intenal commands */
 int builtin_cd(type_command *cmd);

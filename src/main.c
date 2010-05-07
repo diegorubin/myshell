@@ -11,11 +11,20 @@
 #include "lexer.h"
 #include "parser.h"
 
+void line(){
+	char ret[1024];
+	getcwd(ret, sizeof(ret));
+	printf("[myshell:%s]$ ",ret);
+}
+
 int main(int argc, char *argv[]) {
 	do {
-		printf("[]$ ");
+		line();
 		lookahead = get_token();
-		command_line();
+		if(lookahead != EOF)
+			command_line();
+		else
+			printf("\n");
 	} while (lookahead != EOF);
 	return 0;
 }
