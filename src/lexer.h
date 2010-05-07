@@ -11,12 +11,20 @@
 typedef int token_t;
 
 enum {
-	T_SPACE = ' ',
+        T_SPACE = ' ',
+        T_PIPE = '|',
+        T_INPUT = '<',
+        T_OUTPUT = '>',
+        T_CMDSEP = ';',
+        T_BACKGROUND = '&',
+        T_EOL = '\n',
+        T_ARGUMENT = 256,
 };
+
 
 token_t lookahead;
 
 token_t get_token();
-void match(token_t token);
+int match(token_t expected);
 
 #endif /* LEXER_H */

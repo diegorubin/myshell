@@ -16,6 +16,7 @@
  	printf("----------------------");
  	printf("\n");
  	
+ 	test_match();	
  	test_get_token();
  	
  	return 0;

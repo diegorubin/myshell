@@ -11,10 +11,9 @@
 #include "lexer.h"
 
 int main(int argc, char *argv[]) {
-	int c;
 	do {
 		printf("[]$ ");
-		c = get_token();
-	} while (c != EOF);
+		lookahead = get_token();
+	} while (lookahead != EOF);
 	return 0;
 }

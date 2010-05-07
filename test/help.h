@@ -11,5 +11,6 @@
 static int number_of_tests = 0;
 
 void print_test_name(char *test_name);
+void print_ok();
 
 #endif /* HELP */

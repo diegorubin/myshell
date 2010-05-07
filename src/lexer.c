@@ -12,9 +12,27 @@
 #include "lexer.h"
 
 token_t get_token(){
-	char c = getc(stdin);
+	char c;
 	
-	if(c == ' ')
-		return T_SPACE;
-	return 0; 
+	while(true){
+		c = ';';
+		switch(c){
+			case T_SPACE:
+				continue;
+			case T_CMDSEP:
+				return c;
+		}
+	} 
 }
+
+int match(token_t expected)
+{
+
+   if (lookahead != expected) {
+     fprintf (stderr, "Erro de sintaxe!");
+     return false;
+   }
+   lookahead = get_token();
+   return true;
+}
+
