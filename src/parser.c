@@ -29,21 +29,26 @@ void command_line()
 }
 
 type_command *new_command(){
-         type_command *new = calloc(1, sizeof(type_command));
-         new->argc = 0;
-         new->output = NULL;
+     type_command *new = calloc(1, sizeof(type_command));
+     new->argc = 0;
+     new->output = NULL;
 
-         do {
-			/* arguments */
-			new->args[new->argc] = strdup(lexeme);
-			new->argc++;
-			match(T_ARGUMENT);
+     do {
+		new->args[new->argc] = strdup(lexeme);
+		new->argc++;
+		match(T_ARGUMENT);
 
-         } while(lookahead == T_ARGUMENT);
+     } while(lookahead == T_ARGUMENT);
+     
+     if (lookahead == T_OUTPUT){
+	   match(T_OUTPUT);
+	   new->output = strdup(lexeme);
+	   match(T_ARGUMENT);
+	  }
 
-         new->args[new->argc] = NULL;  
-		
-         return new;
+     new->args[new->argc] = NULL;  
+	
+     return new;
 }
 
 int run_command(type_command *cmd){

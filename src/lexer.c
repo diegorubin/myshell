@@ -27,7 +27,7 @@ token_t get_token(){
 	int c;
 	
 	while(true){
-		c = fgetc(stdin);
+		c = getc(stdin);
 		switch(c){
 			case T_SPACE:
 				continue;
@@ -37,6 +37,8 @@ token_t get_token(){
 				return EOF;
 			case '\n':
 				return T_EOL;
+			case '>':
+				return T_OUTPUT;
 			default:{
 				int i = 0;
        	 		do{
