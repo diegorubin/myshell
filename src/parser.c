@@ -9,6 +9,7 @@
 
 extern token_t lookahead;
 
+/* Interpreta o comando digitado */
 void command_line()
 {
     first_command = new_command();
@@ -28,6 +29,7 @@ void command_line()
 
 }
 
+/* Cria na memória a estrutura que guardará o comando a ser executado */
 type_command *new_command(){
      type_command *new = calloc(1, sizeof(type_command));
      new->argc = 0;
@@ -51,6 +53,7 @@ type_command *new_command(){
      return new;
 }
 
+/* Executa um comando */
 int run_command(type_command *cmd){
 	int lastchild;
 	int pid;
