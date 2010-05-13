@@ -23,11 +23,11 @@ static bool is_special(int c)
 		|| c == EOF;
 }
 
-token_t get_token(){
+token_t get_token(FILE *buffer){
 	int c;
 
 	while(true){
-		c = getc(stdin);
+		c = getc(buffer);
 		switch(c){
 			case T_SPACE:
 				continue;
@@ -61,7 +61,7 @@ int match(token_t expected)
      fprintf (stderr, "Erro de sintaxe! %d:%c", lookahead, expected);
      return false;
    }
-   lookahead = get_token();
+   lookahead = get_token(stdin);
    return true;
 }
 

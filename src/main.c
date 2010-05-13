@@ -2,7 +2,7 @@
 /*
  * main.c
  * Copyright (C) Diego Rubin 2010 <rubin.diego@gmail.com>
- * 
+ *
  */
 #include <stdio.h>
 #include <stdlib.h>
@@ -20,7 +20,7 @@ void line(){
 int main(int argc, char *argv[]) {
 	do {
 		line();
-		lookahead = get_token();
+		lookahead = get_token(stdin);
 		if(lookahead != EOF)
 			command_line();
 		else
@@ -28,3 +28,4 @@ int main(int argc, char *argv[]) {
 	} while (lookahead != EOF);
 	return 0;
 }
+

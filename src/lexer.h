@@ -2,11 +2,11 @@
 /*
  * lexer.h
  * Copyright (C) Diego Rubin 2010 <rubin.diego@gmail.com>
- * 
+ *
  */
- 
+
 #ifndef LEXER_H
-#define LEXER_H 
+#define LEXER_H
 
 char lexeme[1024];
 typedef int token_t;
@@ -25,7 +25,8 @@ enum {
 
 token_t lookahead;
 
-token_t get_token();
+token_t get_token(FILE *buffer);
 int match(token_t expected);
 
 #endif /* LEXER_H */
+

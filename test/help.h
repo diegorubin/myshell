@@ -2,7 +2,7 @@
 /*
  * help.h
  * Copyright (C) Diego Rubin 2010 <rubin.diego@gmail.com>
- * 
+ *
  */
 
 #ifndef HELP
@@ -20,6 +20,7 @@ static int buffer = 0;
 
 void print_test_name(char *test_name);
 void print_ok();
-void change_standard_input(const char input[]);
+FILE *change_standard_input(const char input[]);
 
 #endif /* HELP */
+

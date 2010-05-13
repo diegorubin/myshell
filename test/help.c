@@ -2,7 +2,7 @@
 /*
  * help.c
  * Copyright (C) Diego Rubin 2010 <rubin.diego@gmail.com>
- * 
+ *
  */
 #include <stdio.h>
 #include "help.h"
@@ -17,12 +17,14 @@ void print_ok(){
 	if(buffer){
 		close(buffer);
 		buffer = 0;
-	}	
+	}
 }
 
-void change_standard_input(const char input[]){
-	buffer = fmemopen (input, strlen(input), "r");
-	close(0);
-	dup2(buffer,0);
+FILE *change_standard_input(const char input[]){
+    FILE *buffer = fmemopen (input, strlen(input), "r");
+    close(0);
+    dup2(buffer,0);
+	close(buffer);
+	return buffer;
 }
 

@@ -94,14 +94,14 @@ int run_command(type_command *cmd){
 
 int builtin_cd (type_command *cmd){
   if (cmd->argc > 2) {
-	fprintf(stderr, "cd: argumentos demais\n");
+	fprintf(stderr, "o comando cd só aceita um argumento.\n");
 	return 1;
   } else if (cmd->argc == 2) {
 	int ret = chdir(cmd->args[1]);
 	if (ret < 0) perror("chdir");
 	return ret;
   } else {
-	fprintf(stderr, "cd: falta argumento\n");
+	fprintf(stderr, "cd\n Uso: cd <caminho_do_diretorio>\n");
 	return 1;
   }
 
@@ -109,7 +109,7 @@ int builtin_cd (type_command *cmd){
 
 int builtin_pwd (type_command *cmd){
   if (cmd->argc > 1) {
-	fprintf(stderr, "pwd: argumentos demais\n");
+	fprintf(stderr, "o comando pwd não aceita argumentos\n");
 	return 1;
   } else {
 	char ret[1024];
@@ -125,7 +125,7 @@ int builtin_pwd (type_command *cmd){
 
 int builtin_exit (type_command *cmd){
   if (cmd->argc > 1) {
-	fprintf(stderr, "exit: argumentos demais\n");
+	fprintf(stderr, "o comando exit não aceita argumentos\n");
 	return 1;
   } else {
 	exit(0);
