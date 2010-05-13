@@ -2,12 +2,12 @@
 /*
  * parser.h
  * Copyright (C) Diego Rubin 2010 <rubin.diego@gmail.com>
- * 
+ *
  */
 #ifndef PARSER_H
 #define PARSER_H
 #define MAX_ARGS 20
- 
+
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
@@ -20,9 +20,10 @@
 
 typedef struct command_struct type_command;
 struct command_struct {
-        int argc; 
-        char *args[MAX_ARGS]; 
-        char *output; 
+        int argc;
+        char *args[MAX_ARGS];
+        char *output;
+        char *input;
 };
 
 struct command_struct *first_command;

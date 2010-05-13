@@ -7,3 +7,6 @@
 # binary files
 myshell
 myshell_test
+
+#test files
+*.txt

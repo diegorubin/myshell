@@ -2,7 +2,7 @@
 /*
  * lexer.c
  * Copyright (C) Diego Rubin 2010 <rubin.diego@gmail.com>
- * 
+ *
  */
 
 #include <stdio.h>
@@ -25,31 +25,33 @@ static bool is_special(int c)
 
 token_t get_token(){
 	int c;
-	
+
 	while(true){
 		c = getc(stdin);
 		switch(c){
 			case T_SPACE:
 				continue;
 			case ';':
-				return T_CMDSEP; 
+				return T_CMDSEP;
 			case EOF:
 				return EOF;
 			case '\n':
 				return T_EOL;
 			case '>':
 				return T_OUTPUT;
+            case '<':
+                return T_INPUT;
 			default:{
 				int i = 0;
        	 		do{
-       				lexeme[i++] = c; 
+       				lexeme[i++] = c;
 	 			} while (!is_special(c = fgetc(stdin)));
        	 		lexeme[i] = '\0';
        	 		ungetc(c,stdin);
        	 		return T_ARGUMENT;
        	 	}
 		}
-	} 
+	}
 }
 
 int match(token_t expected)

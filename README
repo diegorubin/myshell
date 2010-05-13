@@ -4,21 +4,19 @@ MyShell (Nome que o professor Eraldo usava quando mencionava este projeto.)
 
 	O projeto foi inicialmente projetado para ser desenvolvido utilizando a metodologia TDD(Test Driven Development), porém por causa de problemas pessoais e falta de tempo o projeto não pode ser implementado desta forma.
 	O shell implementado possui a maior parte dos recursos básicos, e outros ainda serão implementados.
-	
+
 2 - Recursos implementados
-	
+
 	- O shell possui os três comandos internos exigidos;
 	- O shell é iterativo e só é encerrado após solicitação do usuário;
 	- O shell permiti a execução de qualquer comando instalado no sistema;
-	- O shell é capaz de redirecionar a saída de um comando simples para um arquivo.
-	
+	- O shell é capaz de redirecionar a saída de um comando simples para um arquivo ('>');
+	- O shell pode usar um arquivo como entrada padrão ('<');
+
 
 3 - Gramática Utilizada
-	
+
 	<command_line> :  <new_command>  <EOL>
-	<new_command> : (<argument>)+ [">" <argument>]
+	<new_command> : (<argument>)+ [">" <argument>] ["<" <argument>]
 	<argument> : /[^ \n><\|;&]+/
 
-4 - Problemas(Bugs)
-
-	-- Quando um comando é executado, o prompt não é reescrito.

@@ -2,7 +2,7 @@
 /*
  * parser.c
  * Copyright (C) Diego Rubin 2010 <rubin.diego@gmail.com>
- * 
+ *
  */
 #include "parser.h"
 #include "lexer.h"
@@ -20,13 +20,10 @@ void command_line()
         builtin_pwd(first_command);
       } else if (strcmp(first_command->args[0],"exit") == 0){
         builtin_exit(first_command);
-      } else { 
+      } else {
         run_command(first_command);
       }
-      match(T_EOL);
     }
-    
-
 }
 
 /* Cria na memória a estrutura que guardará o comando a ser executado */
@@ -34,22 +31,29 @@ type_command *new_command(){
      type_command *new = calloc(1, sizeof(type_command));
      new->argc = 0;
      new->output = NULL;
+     new->input = NULL;
 
-     do {
+    do {
 		new->args[new->argc] = strdup(lexeme);
 		new->argc++;
 		match(T_ARGUMENT);
 
      } while(lookahead == T_ARGUMENT);
-     
+
+     if (lookahead == T_INPUT){
+        match(T_INPUT);
+        new->input = strdup(lexeme);
+        match(T_ARGUMENT);
+     }
+
      if (lookahead == T_OUTPUT){
 	   match(T_OUTPUT);
 	   new->output = strdup(lexeme);
 	   match(T_ARGUMENT);
 	  }
 
-     new->args[new->argc] = NULL;  
-	
+     new->args[new->argc] = NULL;
+
      return new;
 }
 
@@ -59,23 +63,29 @@ int run_command(type_command *cmd){
 	int pid;
 
 	pid = fork();
-	if (pid < 0) { 
+	if (pid < 0) {
 		perror("fork");
 		exit(1);
-	} else if (pid > 0){ 
+	} else if (pid > 0){
 		lastchild = pid;
-	} else { 
-		if(cmd->output != NULL) { 
-			int f = open(cmd->output, O_WRONLY | O_CREAT, 0666);
+	} else {
+	    if(cmd->input != NULL){
+	        int file_input = open(cmd->input, O_RDONLY);
+	        close(0);
+	        dup2(file_input,0);
+	        close(file_input);
+	    }
+		if(cmd->output != NULL) {
+			int file_output = open(cmd->output, O_WRONLY | O_CREAT, 0666);
 			close(1);
-			dup2(f,1);
-			close(f);
+			dup2(file_output,1);
+			close(file_output);
 		}
 		execvp(cmd->args[0],cmd->args);
-		perror("exec");
+		perror(cmd->args[0]);
 		exit(127);
 	}
-	 
+
    int status;
    waitpid(lastchild,&status,0);
    return status;
@@ -83,25 +93,25 @@ int run_command(type_command *cmd){
 }
 
 int builtin_cd (type_command *cmd){
-  if (cmd->argc > 2) { 
-	fprintf(stderr, "cd: argumentos demais\n"); 
-	return 1; 
-  } else if (cmd->argc == 2) { 
-	int ret = chdir(cmd->args[1]); 
-	if (ret < 0) perror("chdir"); 
-	return ret; 
-  } else { 
-	fprintf(stderr, "cd: falta argumento\n"); 
-	return 1; 
+  if (cmd->argc > 2) {
+	fprintf(stderr, "cd: argumentos demais\n");
+	return 1;
+  } else if (cmd->argc == 2) {
+	int ret = chdir(cmd->args[1]);
+	if (ret < 0) perror("chdir");
+	return ret;
+  } else {
+	fprintf(stderr, "cd: falta argumento\n");
+	return 1;
   }
 
 }
 
 int builtin_pwd (type_command *cmd){
-  if (cmd->argc > 1) { 
-	fprintf(stderr, "pwd: argumentos demais\n"); 
-	return 1; 
-  } else { 
+  if (cmd->argc > 1) {
+	fprintf(stderr, "pwd: argumentos demais\n");
+	return 1;
+  } else {
 	char ret[1024];
 	if (getcwd(ret, sizeof(ret)) != NULL) {
 		printf("%s\n", ret);
@@ -114,12 +124,12 @@ int builtin_pwd (type_command *cmd){
 }
 
 int builtin_exit (type_command *cmd){
-  if (cmd->argc > 1) { 
-	fprintf(stderr, "exit: argumentos demais\n"); 
-	return 1; 
-  } else { 
-	exit(0); 
-  } 
+  if (cmd->argc > 1) {
+	fprintf(stderr, "exit: argumentos demais\n");
+	return 1;
+  } else {
+	exit(0);
+  }
 
 }
 
