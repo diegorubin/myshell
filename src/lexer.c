@@ -37,17 +37,24 @@ token_t get_token(FILE *buffer){
 				return EOF;
 			case '\n':
 				return T_EOL;
-			case '>':
-				return T_OUTPUT;
+			case '>':{
+				c = getc(buffer);
+				if (c == '>')
+					return T_OUTPUT_APPEND;
+				else{
+					ungetc(c,buffer);
+					return T_OUTPUT;
+				}
+			}
             case '<':
                 return T_INPUT;
 			default:{
 				int i = 0;
        	 		do{
        				lexeme[i++] = c;
-	 			} while (!is_special(c = fgetc(stdin)));
+	 			} while (!is_special(c = getc(buffer)));
        	 		lexeme[i] = '\0';
-       	 		ungetc(c,stdin);
+       	 		ungetc(c,buffer);
        	 		return T_ARGUMENT;
        	 	}
 		}

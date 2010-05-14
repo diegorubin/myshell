@@ -10,3 +10,6 @@ myshell_test
 
 #test files
 *.txt
+
+#mercurial
+.hg

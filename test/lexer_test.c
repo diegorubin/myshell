@@ -20,12 +20,26 @@ void test_match(){
 }
 
 void test_get_token(){
-	print_test_name("Get Space Token");
+	print_test_name("Get Command Sep Token");
 	FILE *new_in = change_standard_input(";");
 
 	assert(get_token(new_in) == T_CMDSEP && "test_get_token()");
 	print_ok();
+}
 
+void test_get_output_token(){
+	print_test_name("Get Output Token");
+	FILE *new_in = change_standard_input(">");
 
+	assert(get_token(new_in) == T_OUTPUT && "test_get_output_token()");
+	print_ok();
+}
+
+void test_get_output_append_token(){
+	print_test_name("Get Append Output Token");
+	FILE *new_in = change_standard_input(">>");
+
+	assert(get_token(new_in) == T_OUTPUT_APPEND && "test_get_output_append_token()");
+	print_ok();
 }
 

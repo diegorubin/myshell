@@ -23,6 +23,7 @@ struct command_struct {
         int argc;
         char *args[MAX_ARGS];
         char *output;
+        int output_mode;
         char *input;
 };
 

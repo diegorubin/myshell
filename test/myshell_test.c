@@ -18,6 +18,8 @@
  	
  	test_match();	
  	test_get_token();
+ 	test_get_output_token();
+ 	test_get_output_append_token();
  	
  	return 0;
  }

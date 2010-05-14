@@ -20,6 +20,7 @@ enum {
         T_BACKGROUND = '&',
         T_EOL = '\n',
         T_ARGUMENT = 1024,
+        T_OUTPUT_APPEND = 1025,
 };
 
 

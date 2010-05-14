@@ -46,10 +46,17 @@ type_command *new_command(){
         match(T_ARGUMENT);
      }
 
-     if (lookahead == T_OUTPUT){
-	   match(T_OUTPUT);
-	   new->output = strdup(lexeme);
-	   match(T_ARGUMENT);
+     if (lookahead == T_OUTPUT || lookahead == T_OUTPUT_APPEND){
+     	if(lookahead == T_OUTPUT){
+			match(T_OUTPUT);
+			new->output_mode = O_WRONLY | O_CREAT;
+		}
+		else{
+			match(T_OUTPUT_APPEND);
+			new->output_mode = O_WRONLY | O_APPEND | O_CREAT;
+		}
+		new->output = strdup(lexeme);
+		match(T_ARGUMENT);
 	  }
 
      new->args[new->argc] = NULL;
@@ -76,7 +83,7 @@ int run_command(type_command *cmd){
 	        close(file_input);
 	    }
 		if(cmd->output != NULL) {
-			int file_output = open(cmd->output, O_WRONLY | O_CREAT, 0666);
+			int file_output = open(cmd->output, cmd->output_mode, 0666);
 			close(1);
 			dup2(file_output,1);
 			close(file_output);

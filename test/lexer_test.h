@@ -16,5 +16,7 @@
 
 void test_match();
 void test_get_token();
+void test_get_output_token();
+void test_get_output_append_token();
 
 #endif /* LEXER_TEST_H */
