@@ -98,6 +98,7 @@ int run_command(type_command *cmd){
 		if(cmd->next != NULL){
             /* código para a pipeline complexa */
             /* o algoritimo ainda esta sendo construido */
+
             dup2(pd[1], 1);
             close(pd[1]);
 			run_command(cmd->next);
