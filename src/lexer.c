@@ -37,6 +37,8 @@ token_t get_token(FILE *buffer){
 				return EOF;
 			case '\n':
 				return T_EOL;
+            case '|':
+                return T_PIPE;
 			case '>':{
 				c = getc(buffer);
 				if (c == '>')

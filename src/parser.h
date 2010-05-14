@@ -17,6 +17,7 @@
 #include <unistd.h>
 #include <glob.h>
 #include <sys/wait.h>
+#include <stdbool.h>
 
 typedef struct command_struct type_command;
 struct command_struct {
@@ -25,9 +26,10 @@ struct command_struct {
         char *output;
         int output_mode;
         char *input;
+        type_command *next;
 };
 
-struct command_struct *first_command;
+struct command_struct *command;
 
 void command_line();
 type_command *new_command();

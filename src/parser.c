@@ -8,45 +8,52 @@
 #include "lexer.h"
 
 extern token_t lookahead;
+int pd[2];
 
 /* Interpreta o comando digitado */
 void command_line()
 {
-    first_command = new_command();
+    command = new_command(false);
     if (lookahead == T_EOL) {
-      if (strcmp(first_command->args[0],"cd") == 0){
-        builtin_cd(first_command);
-      } else if (strcmp(first_command->args[0],"pwd") == 0){
-        builtin_pwd(first_command);
-      } else if (strcmp(first_command->args[0],"exit") == 0){
-        builtin_exit(first_command);
+      if (strcmp(command->args[0],"cd") == 0){
+        builtin_cd(command);
+      } else if (strcmp(command->args[0],"pwd") == 0){
+        builtin_pwd(command);
+      } else if (strcmp(command->args[0],"exit") == 0){
+        builtin_exit(command);
       } else {
-        run_command(first_command);
+        run_command(command);
       }
     }
 }
 
 /* Cria na memória a estrutura que guardará o comando a ser executado */
-type_command *new_command(){
-     type_command *new = calloc(1, sizeof(type_command));
-     new->argc = 0;
-     new->output = NULL;
-     new->input = NULL;
+type_command *new_command(int is_pipe){
+    type_command *new = calloc(1, sizeof(type_command));
+    new->argc = 0;
+    new->output = NULL;
+    new->input = NULL;
+    new->next = NULL;
 
     do {
-		new->args[new->argc] = strdup(lexeme);
+        new->args[new->argc] = strdup(lexeme);
 		new->argc++;
 		match(T_ARGUMENT);
 
      } while(lookahead == T_ARGUMENT);
 
-     if (lookahead == T_INPUT){
+     if (lookahead == T_PIPE){
+        new->next = new_command(true);
+        match(T_PIPE);
+     }
+
+     if (lookahead == T_INPUT && !is_pipe){
         match(T_INPUT);
         new->input = strdup(lexeme);
         match(T_ARGUMENT);
      }
 
-     if (lookahead == T_OUTPUT || lookahead == T_OUTPUT_APPEND){
+     if ((lookahead == T_OUTPUT || lookahead == T_OUTPUT_APPEND) && new->next == NULL){
      	if(lookahead == T_OUTPUT){
 			match(T_OUTPUT);
 			new->output_mode = O_WRONLY | O_CREAT;
@@ -88,9 +95,16 @@ int run_command(type_command *cmd){
 			dup2(file_output,1);
 			close(file_output);
 		}
+		if(cmd->next != NULL){
+            /* código para a pipeline complexa */
+            /* o algoritimo ainda esta sendo construido */
+            dup2(pd[1], 1);
+            close(pd[1]);
+			run_command(cmd->next);
+		}
 		execvp(cmd->args[0],cmd->args);
 		perror(cmd->args[0]);
-		exit(127);
+		exit(3);
 	}
 
    int status;
